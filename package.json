@@ -1,0 +1,11 @@
+{
+  "name": "auto-grid",
+  "version": "1.0.0",
+  "description": "JavaScript API for simply adding and removing DOM elements to a fixed size element with automatic sizing using CSS3 grids.",
+  "main": "index.js",
+  "scripts": {
+    
+  },
+  "author": "Damien Golding",
+  "license": "MIT"
+}

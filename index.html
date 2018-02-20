@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Auto Grid examples</title>
+        <script src="./index.js"></script>
+        <script>
+            window.addEventListener('load', function(){
+
+                //Image
+                const getImage = function(){
+                    const image = document.createElement('img');
+                    image.src = './hamster.JPG';
+                    return image;
+                }
+
+                //Video
+                const streamToVideo = function(stream){
+                    const video = document.createElement('video');
+                    video.autoplay = true;
+                    video.srcObject = stream;
+
+                    return video;
+                }
+                const getVideo = function(){
+                    if(window.stream){
+                        return Promise.resolve(streamToVideo(stream));
+                    }else{
+                        return navigator.mediaDevices.getUserMedia({video: true})
+                        .then(function(stream){
+                            window.stream = stream;
+                            return streamToVideo(stream);
+                        });
+                    }
+                }
+
+                window.autoGrid = new AutoGrid({
+                    wrapper: document.querySelector('#wrapper')
+                });
+                window.add = function(){
+                    
+                    const el = document.getElementById('type');
+                    const type = el.options[el.selectedIndex].value;
+
+                    if(type === 'color'){
+                        autoGrid.addMock();
+                    }else if(type === 'image'){
+                        autoGrid.add(getImage());
+                    }else if(type === 'webcam'){
+                        getVideo()
+                        .then(function(video){
+                            autoGrid.add(video);
+                        });
+                    }
+                }
+                window.remove = autoGrid.remove;
+            });
+        </script>
+    </head>
+
+    <body>
+        <div>
+            <h1>Auto Grid examples</h1>
+            <div>
+                Automatically create grids with fixed sized parent element.<br>
+                Sizing is performed using CSS3 grid + other css.
+            </div>
+
+            <form style="margin-top:5px;">
+                <select id="type">
+                    <option value="color">Color</option>
+                    <option value="image">Image</option>
+                    <option value="webcam">Webcam</option>
+                </select>
+                <input type="button" value="Add" onclick="add()">
+                | 
+                <input type="button" value="Remove" onclick="remove()">
+            </form>
+            <div id="wrapper" style="width:300px;height:300px;border:1px solid #BBB;">
+                <!-- CELLS ADDED HERE -->
+            </div>
+        </div>
+    </body>
+</html>
