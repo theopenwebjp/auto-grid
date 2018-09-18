@@ -1,7 +1,9 @@
 # Description
+
 JavaScript API for simply adding and removing DOM elements to a fixed size element with automatic sizing using CSS3 grids.
 
-# Usage
+## Usage
+
 ```
 const AutoGrid = require('auto-grid');
 const autoGrid = new AutoGrid({
@@ -19,10 +21,18 @@ autoGrid.remove();
 
 //Removes specified element
 autoGrid.remove(document.getElementById(('id')));
+
+//Gets list of grid contents
+autoGrid.list()
+
+//Updates to specific array of elements
+autoGrid.update([document.createElement('div'), document.createElement('div')])
 ```
 
-# Problems
+## Problems
+
 Currently has problems with fitting in elements if text is taking all space.
 
-# Example
+## Example
+
 [./index.html](./index.html)

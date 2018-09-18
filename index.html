@@ -35,11 +35,7 @@
                 window.autoGrid = new AutoGrid({
                     wrapper: document.querySelector('#wrapper')
                 });
-                window.add = function(){
-                    
-                    const el = document.getElementById('type');
-                    const type = el.options[el.selectedIndex].value;
-
+                function _add(type){
                     if(type === 'color'){
                         autoGrid.addMock();
                     }else if(type === 'image'){
@@ -51,7 +47,20 @@
                         });
                     }
                 }
+                window.add = function(){
+                    
+                    const el = document.getElementById('type');
+                    const type = el.options[el.selectedIndex].value;
+                    _add(type)
+                }
                 window.remove = autoGrid.remove;
+                window.update = function(){
+                    autoGrid.update([
+                        getImage(),
+                        getImage(),
+                        getImage()
+                    ],{type: 'exact'})
+                }
             });
         </script>
     </head>
@@ -65,14 +74,19 @@
             </div>
 
             <form style="margin-top:5px;">
-                <select id="type">
-                    <option value="color">Color</option>
-                    <option value="image">Image</option>
-                    <option value="webcam">Webcam</option>
-                </select>
-                <input type="button" value="Add" onclick="add()">
-                | 
-                <input type="button" value="Remove" onclick="remove()">
+                <div>
+                    <select id="type">
+                        <option value="color">Color</option>
+                        <option value="image">Image</option>
+                        <option value="webcam">Webcam</option>
+                    </select>
+                    <input type="button" value="Add" onclick="add()">
+                    | 
+                    <input type="button" value="Remove" onclick="remove()">
+                </div>
+                <div style="margin-top:5px;">
+                    <input type="button" value="Update" onclick="update()"> Updates to 3 images.    
+                </div>
             </form>
             <div id="wrapper" style="width:300px;height:300px;border:1px solid #BBB;">
                 <!-- CELLS ADDED HERE -->
