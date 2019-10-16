@@ -1,4 +1,7 @@
 class AutoGrid {
+  /**
+   * @param {object} options
+   */
   constructor(options = {}) {
     this.status = {
       wrapper: null,
@@ -38,6 +41,7 @@ class AutoGrid {
    * Adds element and then resizes.
    * @param {DOMElement} element
    * @param {*} index Optional index for specifying where to add
+   * @return {object} this
    */
   add(element, index = undefined) {
     const s = element.style;
@@ -69,6 +73,7 @@ class AutoGrid {
 
   /**
    * Adds simple element for testing.
+   * @return {object} this
    */
   addMock() {
     const curNum =
@@ -88,6 +93,7 @@ class AutoGrid {
   /**
    * Removes element and then resizes.
    * @param {*} key See below.
+   * @return {object} this
    */
   remove(key) {
     let element = null;

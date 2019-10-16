@@ -4,7 +4,7 @@ JavaScript API for simply adding and removing DOM elements to a fixed size eleme
 
 ## Usage
 
-```
+```javascript
 const AutoGrid = require('auto-grid');
 const autoGrid = new AutoGrid({
     wrapper: document.querySelector('#element-id')
