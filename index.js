@@ -49,7 +49,7 @@ class AutoGrid {
     s.minWidth = 0;
     s.minHeight = 0;
     s.width = "100%";
-    s.height = "100%";
+    // s.height = "100%"; Removed because causes click area bug.
     s.objectFit = this.status.objectFit;
 
     if (index !== undefined) {
