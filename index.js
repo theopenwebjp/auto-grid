@@ -5,9 +5,15 @@
  * @property {string} objectFit
  */
 
+/**
+ * @typedef {object} Updates
+ * @property {[HTMLElement, number][]} add
+ * @property {number[]} remove
+ */
+
 class AutoGrid {
     /**
-     * @param {AutoGridStatus} options
+     * @param {Partial<AutoGridStatus>} options
      */
     constructor(options = {}) {
          /**
@@ -29,7 +35,7 @@ class AutoGrid {
     /**
      * Initialize environment.
      * Pass wrapper element here.
-     * @param {AutoGridStatus} options
+     * @param {Partial<AutoGridStatus>} options
      */
     initialize(options = {}) {
         // Options
@@ -38,15 +44,15 @@ class AutoGrid {
         this.status.objectFit = options.objectFit ? options.objectFit : this.status.objectFit
 
         // Initialization
-        this.status.wrapper.setAttribute('data-auto-grid', true)
+        this.status.wrapper.setAttribute('data-auto-grid', 'true')
         this.status.wrapper.style.display = 'grid'
     }
 
     /**
      * Adds element and then resizes.
      * @param {HTMLElement} element
-     * @param {*} index Optional index for specifying where to add
-     * @return {object} this // TODO: fix
+     * @param {number} [index] Optional index for specifying where to add
+     * Returns instance
      */
     add(element, index = undefined) {
         const s = element.style
@@ -57,19 +63,20 @@ class AutoGrid {
             // s.height = '100%' Removed because causes click area bug.
         s.objectFit = this.status.objectFit
 
+        const wrapper = this._wrapper()
         if (index !== undefined) {
-            const children = [...this.status.wrapper.children]
+            const children = [...wrapper.children]
             const elementAtIndex = children[index]
             if (elementAtIndex) {
-                this.status.wrapper.insertBefore(element, elementAtIndex)
+                wrapper.insertBefore(element, elementAtIndex)
             } else {
                 console.warn(
                     'update currently appends at end if no existing element at index.'
                 )
-                this.status.wrapper.appendChild(element)
+                wrapper.appendChild(element)
             }
         } else {
-            this.status.wrapper.appendChild(element)
+            wrapper.appendChild(element)
         }
         this._resize()
 
@@ -78,11 +85,11 @@ class AutoGrid {
 
     /**
      * Adds simple element for testing.
-     * @return {object} this
+     * Returns instance
      */
     addMock() {
         const curNum =
-            this.status.wrapper.children.length - 1 + this.status.indexAdder
+            this._wrapper().children.length - 1 + this.status.indexAdder
         const text = `Text: ${curNum}`
 
         const el = document.createElement('div')
@@ -98,32 +105,33 @@ class AutoGrid {
     /**
      * Removes element and then resizes.
      * @param {*} key See below.
-     * @return {object} this
+     * Returns instance
      */
     remove(key) {
         /**
-         * @type {HTMLElement|null}
+         * @type {Element|null}
          */
         let element = null
 
         // Selector
+        const wrapper = this._wrapper()
         if (typeof key === 'string') {
-            element = this.status.wrapper.querySelector(key)
+            element = wrapper.querySelector(key)
         } else if (typeof key === 'number') {
-            element = this.status.wrapper.children[key]
+            element = wrapper.children[key]
         } else if (Array.isArray(key) && key.length === 2) {
             // Array: [x, y] using indexes starting from 1 unless changed.
             // TO DO
         } else if (key === null || key === undefined || key === false) {
             // Falsy(null, undefined, false)
-            const children = this.status.wrapper.children
+            const children = wrapper.children
             element = children[children.length - 1]
         } else {
             // DOM Element. TODO: Typing
             element = key
         }
 
-        if (element) {
+        if (element && element.parentElement) {
             element.parentElement.removeChild(element)
         } else {
             throw new Error('Unexpected error on remove')
@@ -139,28 +147,26 @@ class AutoGrid {
      * @return {Element[]}
      */
     list() {
-        const children = this.status.wrapper.children
+        const children = this._wrapper().children
         return [...children]
     }
 
     /**
      * Updates grid using array data and options
-     * @param {Array} arr Array of grid cell elements
-     * @param {Object} options Optional object({type: 'exact'})
+     * @param {HTMLElement[]} arr Array of grid cell elements
+     * @param {{ type?: 'exact'|'exist'|'add' }} options Optional object({type: 'exact'})
      */
     update(arr = [], options = {}) {
         /*
-                exact: Exactly same as array.
-                exist: If exists regardless of index, then no need to add.
-                add: Adds not added regardless of index.
-                */
+        exact: Exactly same as array.
+        exist: If exists regardless of index, then no need to add.
+        add: Adds not added regardless of index.
+        */
         const type = options.type || 'exact'
         const list = this.list()
-            /**
-             * @type {object}
-             * @property {Array<HTMLElement, number>} add
-             * @property {Array<number>} remove
-             */
+        /**
+         * @type {Updates}
+         */
         const updates = {
             add: [],
             remove: []
@@ -178,7 +184,7 @@ class AutoGrid {
             })
         } else if (type === 'exist') {
             list.forEach((item, index) => {
-                if (arr.indexOf(item) < 0) {
+                if (arr.indexOf(/** @type {HTMLElement} */ (item)) < 0) {
                     updates.remove.push(index)
                 }
             })
@@ -207,7 +213,7 @@ class AutoGrid {
     }
 
     _resize() {
-        const wrapper = this.status.wrapper
+        const wrapper = this._wrapper()
             // const width = wrapper.getBoundingClientRect().width
             // const height = wrapper.getBoundingClientRect().height
 
@@ -218,11 +224,23 @@ class AutoGrid {
         wrapper.style.gridTemplateColumns = oneDimStr
         wrapper.style.gridTemplateRows = oneDimStr
     }
+
+    _wrapper() {
+        if (this.status.wrapper) {
+            return this.status.wrapper
+        } else {
+            throw new Error('No wrapper')
+        }
+    }
 }
 
+/*
 if (typeof window === 'object') {
     window.AutoGrid = AutoGrid
 }
 if (typeof module === 'object') {
     module.exports = AutoGrid
 }
+*/
+
+export default AutoGrid

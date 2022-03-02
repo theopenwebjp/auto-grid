@@ -6,6 +6,20 @@
   "scripts": {
     
   },
-  "author": "Damien Golding",
+  "keywords": [
+    
+  ],
+  "contributors": [
+    "Damien Golding <noreply@damiengolding.com> (https://damiengolding.com)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goldingdmien/auto-grid.git"
+  },
+  "homepage": "https://github.com/goldingdmien/auto-grid",
+  "bugs": {
+    "url": "https://github.com/goldingdmien/auto-grid/issues"
+  },
+  "private": false,
   "license": "MIT"
 }

@@ -5,7 +5,8 @@ JavaScript API for simply adding and removing DOM elements to a fixed size eleme
 ## Usage
 
 ```javascript
-const AutoGrid = require('auto-grid');
+// const AutoGrid = require('auto-grid'); // commonjs support removed. Use es6 imports.
+import AutoGrid from 'auto-grid'
 const autoGrid = new AutoGrid({
     wrapper: document.querySelector('#element-id')
 });
@@ -36,3 +37,8 @@ Currently has problems with fitting in elements if text is taking all space.
 ## Example
 
 [./index.html](./index.html)
+
+```bash
+npx http-server ./
+# http://localhost:8080
+```
