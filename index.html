@@ -15,6 +15,9 @@
             }
 
             // Video
+            /**
+             * @param {MediaStream} stream
+             */
             const streamToVideo = function (stream) {
                 const video = document.createElement('video');
                 video.autoplay = true;
@@ -37,6 +40,9 @@
             window.autoGrid = new AutoGrid({
                 wrapper: document.querySelector('#wrapper')
             });
+            /**
+             * @param {'color'|'image'|'webcam'} type
+             **/
             function _add(type) {
                 if (type === 'color') {
                     autoGrid.addMock();

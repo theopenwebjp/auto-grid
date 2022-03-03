@@ -2,11 +2,16 @@
 
 JavaScript API for simply adding and removing DOM elements to a fixed size element with automatic sizing using CSS3 grids.
 
+## Installation
+
+`npm install @theopenweb/auto-grid`
+
 ## Usage
 
 ```javascript
 // const AutoGrid = require('auto-grid'); // commonjs support removed. Use es6 imports.
 import AutoGrid from 'auto-grid'
+
 const autoGrid = new AutoGrid({
     wrapper: document.querySelector('#element-id')
 });

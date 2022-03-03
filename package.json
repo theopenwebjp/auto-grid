@@ -1,24 +1,23 @@
 {
-  "name": "auto-grid",
+  "name": "@theopenweb/auto-grid",
   "version": "1.0.0",
   "description": "JavaScript API for simply adding and removing DOM elements to a fixed size element with automatic sizing using CSS3 grids.",
   "main": "index.js",
-  "scripts": {
-    
-  },
+  "scripts": {},
   "keywords": [
-    
+    "grid", "auto", "element grid", "表", "テーブル", "要素マトリックス"
   ],
+  "author": "The Open Web <noreply@theopenweb.jp> (https://theopenweb.jp)",
   "contributors": [
     "Damien Golding <noreply@damiengolding.com> (https://damiengolding.com)"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/goldingdmien/auto-grid.git"
+    "url": "https://github.com/theopenwebjp/auto-grid.git"
   },
-  "homepage": "https://github.com/goldingdmien/auto-grid",
+  "homepage": "https://theopenweb.info",
   "bugs": {
-    "url": "https://github.com/goldingdmien/auto-grid/issues"
+    "url": "https://github.com/theopenwebjp/auto-grid/issues"
   },
   "private": false,
   "license": "MIT"
